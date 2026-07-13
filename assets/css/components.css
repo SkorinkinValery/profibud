@@ -37,6 +37,9 @@
   letter-spacing: 0.12em;
 }
 
+/* На десктопе drawer прозрачен для раскладки — menu и actions
+   участвуют в flex шапки напрямую (brand | menu | actions). */
+.nav__drawer { display: contents; }
 .nav__menu {
   display: flex;
   align-items: center;
@@ -45,6 +48,25 @@
   font-weight: 500;
 }
 .nav__actions { display: flex; align-items: center; gap: 24px; }
+
+/* Кнопка-бургер — только на мобиле */
+.nav__burger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px; height: 44px;
+  margin: -10px -10px -10px 0;
+  border: none;
+  background: transparent;
+  color: var(--char);
+  cursor: pointer;
+}
+.nav__burger .ic-close { display: none; }
+.nav.is-open .nav__burger .ic-open { display: none; }
+.nav.is-open .nav__burger .ic-close { display: block; }
+
+.nav__backdrop { display: none; }
+body.nav-open { overflow: hidden; }
 
 .nav-phone {
   display: flex; align-items: center; gap: 8px;
