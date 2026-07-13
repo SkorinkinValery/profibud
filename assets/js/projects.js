@@ -3,10 +3,10 @@
    Один шаблон карточки для главной и всех страниц каталога.
    ============================================================ */
 const IMG = {
-  s1: 'assets/img/house-modern-1story.jpg',
-  dark: 'assets/img/house-dark-carport.jpg',
-  stone: 'assets/img/house-2story-stone.jpg',
-  chalet: 'assets/img/house-chalet.jpg',
+  s1: 'assets/img/house-modern-1story.jpg?v=20260714a',
+  dark: 'assets/img/house-dark-carport.jpg?v=20260714a',
+  stone: 'assets/img/house-2story-stone.jpg?v=20260714a',
+  chalet: 'assets/img/house-chalet.jpg?v=20260714a',
 };
 const PROJECTS = [
   { tag: 'Газосиликат', name: 'Проект «Гродно-100»', type: 'Одноэтажный', area: '100 м²',    beds: '3 комн.', baths: '1 с/у', floors: '1 этаж',  cat: 'do120', img: IMG.s1 },
