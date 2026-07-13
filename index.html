@@ -13,7 +13,6 @@
   <link rel="stylesheet" href="assets/css/tokens.css?v=20260713" />
   <link rel="stylesheet" href="assets/css/base.css?v=20260713" />
   <link rel="stylesheet" href="assets/css/components.css?v=20260713" />
-  <link rel="stylesheet" href="assets/css/responsive.css?v=20260713" />
 
   <style>
     /* --- Специфика главной --- */
@@ -96,6 +95,11 @@
     .about-panel__media { aspect-ratio: 4/3; border-radius: 20px; overflow: hidden; background: var(--ph-2); }
     /* CTA-стили — общие, вынесены в components.css */
   </style>
+
+  <!-- responsive.css грузится ПОСЛЕ inline-стилей, чтобы медиазапросы
+       побеждали десктопные правила выше (иначе @media проигрывает по
+       порядку каскада — медиазапросы не повышают специфичность). -->
+  <link rel="stylesheet" href="assets/css/responsive.css?v=20260713b" />
 </head>
 <body>
 
