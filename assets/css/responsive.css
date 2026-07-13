@@ -156,9 +156,9 @@
     left: auto;
     bottom: auto;
     transform: none;
-    width: 100%;
+    width: calc(100% - 28px);
     max-width: none;
-    margin: -44px 0 0;             /* только наслаивание на фото, ширина как у фото */
+    margin: -44px auto 0;          /* наслаивание на фото + лёгкий боковой инсет */
     grid-template-columns: 1fr 1fr;
     gap: 8px;
   }
