@@ -60,6 +60,8 @@
   background: transparent;
   color: var(--char);
   cursor: pointer;
+  position: relative;
+  z-index: 80;              /* выше подложки (60) и панели (70) — крестик всегда кликабелен */
 }
 .nav__burger .ic-close { display: none; }
 .nav.is-open .nav__burger .ic-open { display: none; }

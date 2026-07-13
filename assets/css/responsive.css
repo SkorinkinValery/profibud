@@ -98,14 +98,15 @@
   }
   .nav__actions .btn { width: 100%; padding: 13px 24px; }
 
-  /* Подложка */
+  /* Подложка — видна только при открытом меню */
   .nav__backdrop {
-    display: block;
+    display: none;
     position: fixed;
     inset: 0;
     background: rgba(26, 26, 26, .45);
     z-index: 60;
   }
+  .nav.is-open .nav__backdrop { display: block; }
 
   h1 { font-size: 46px !important; }
 }
