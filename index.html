@@ -10,9 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="assets/css/tokens.css?v=20260713i" />
-  <link rel="stylesheet" href="assets/css/base.css?v=20260713i" />
-  <link rel="stylesheet" href="assets/css/components.css?v=20260713i" />
+  <link rel="stylesheet" href="assets/css/tokens.css?v=20260713j" />
+  <link rel="stylesheet" href="assets/css/base.css?v=20260713j" />
+  <link rel="stylesheet" href="assets/css/components.css?v=20260713j" />
 
   <style>
     /* --- Специфика главной --- */
@@ -33,8 +33,7 @@
     .hero__trust { display: flex; align-items: center; gap: 24px; }
     .avatars { display: flex; align-items: center; }
     .avatars .av { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; border: 2px solid var(--cream); }
-    .avatars .av + .av,
-    .avatars .badge { margin-left: -14px; }
+    .avatars .av + .av { margin-left: -14px; }
     .avatars .badge {
       width: 48px; height: 48px; border-radius: 50%;
       border: 2px solid var(--cream); background: var(--gold); color: var(--char);
@@ -99,7 +98,7 @@
   <!-- responsive.css грузится ПОСЛЕ inline-стилей, чтобы медиазапросы
        побеждали десктопные правила выше (иначе @media проигрывает по
        порядку каскада — медиазапросы не повышают специфичность). -->
-  <link rel="stylesheet" href="assets/css/responsive.css?v=20260713i" />
+  <link rel="stylesheet" href="assets/css/responsive.css?v=20260713j" />
 </head>
 <body>
 
@@ -345,11 +344,11 @@
     </svg>
   </div>
 
-  <script src="assets/js/partials.js?v=20260713i"></script>
-  <script src="assets/js/nav.js?v=20260713i"></script>
-  <script src="assets/js/projects.js?v=20260713i"></script>
-  <script src="assets/js/form.js?v=20260713i"></script>
-  <script src="assets/js/smooth-cursor.js?v=20260713i"></script>
+  <script src="assets/js/partials.js?v=20260713j"></script>
+  <script src="assets/js/nav.js?v=20260713j"></script>
+  <script src="assets/js/projects.js?v=20260713j"></script>
+  <script src="assets/js/form.js?v=20260713j"></script>
+  <script src="assets/js/smooth-cursor.js?v=20260713j"></script>
   <script>renderProjects('projects-grid', { limit: 6 });</script>
 </body>
 </html>
