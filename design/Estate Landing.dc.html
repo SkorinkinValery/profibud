@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Manrope', system-ui, sans-serif; color: #1A1A1A; background: #FDFCF9; -webkit-font-smoothing: antialiased; }
+  h1,h2,h3,h4,h5 { font-family: 'Manrope', system-ui, sans-serif; letter-spacing: -0.02em; }
+  a { color: inherit; text-decoration: none; }
+  a:hover { color: #8B7D6B; }
+  ::selection { background: #D4AF37; color: #1A1A1A; }
+  .nav-link { position: relative; }
+  .nav-link::after { content: ''; position: absolute; left: 50%; bottom: -6px; width: 0; height: 1px; background: #1A1A1A; transform: translateX(-50%); transition: width .35s cubic-bezier(.4,0,.2,1); }
+  .nav-link:hover::after { width: 100%; }
+  .has-drop { position: relative; }
+  .has-drop::after { content:''; position:absolute; top:100%; left:-20px; right:-20px; height:24px; }
+  .drop { position:absolute; top:calc(100% + 18px); left:50%; transform:translateX(-50%) translateY(8px); background:#fff; border:1px solid rgba(139,125,107,.2); border-radius:16px; padding:8px; min-width:256px; box-shadow:0 24px 48px -16px rgba(26,26,26,.22); opacity:0; visibility:hidden; transition:opacity .25s ease, transform .25s ease; z-index:60; }
+  .has-drop:hover .drop { opacity:1; visibility:visible; transform:translateX(-50%) translateY(0); }
+  .drop-item { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:11px 14px; border-radius:10px; font-size:14px; font-weight:500; color:#1A1A1A; transition:background .2s ease; }
+  .drop-item:hover { background:#f5f2ec; color:#1A1A1A; }
+  .drop-item .cnt { color:#8B7D6B; font-size:12px; font-weight:700; }
+  .prop-img { transition: transform .5s ease-in-out; }
+  .prop-card:hover .prop-img { transform: scale(1.05); }
+  .about-icon { transition: background .35s ease, color .35s ease; }
+  .about-icon svg { transition: stroke .35s ease; }
+  .about-card:hover .about-icon { background: #1A1A1A; }
+  .about-card:hover .about-icon svg { stroke: #FDFCF9; }
+  .send-icon { transition: transform .35s ease; }
+  .send-btn:hover .send-icon { transform: translate(4px,-4px); }
+  .heart-btn { transition: background .3s ease, color .3s ease; }
+  .heart-btn:hover { background: #D4AF37 !important; color: #1A1A1A; }
+  @keyframes floaty { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-8px); } }
+  @media (pointer: fine) {
+    html.smooth-cursor-on, html.smooth-cursor-on * { cursor: none !important; }
+    html.smooth-cursor-on input, html.smooth-cursor-on textarea, html.smooth-cursor-on select { cursor: text !important; }
+  }
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 1024px) {
+    header { height: auto !important; }
+    header nav { flex-wrap: wrap !important; padding: 14px 24px !important; row-gap: 12px !important; }
+    header nav > div:nth-of-type(1) { order: 3; width: 100%; overflow-x: auto; justify-content: flex-start !important; gap: 26px !important; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
+    header nav > div:nth-of-type(1) .nav-link { white-space: nowrap; }
+    .has-drop .drop { display: none !important; }
+    h1 { font-size: 46px !important; }
+  }
+  @media (max-width: 900px) {
+    section { padding-left: 24px !important; padding-right: 24px !important; }
+    [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; gap: 40px !important; }
+    [style*="repeat(3,1fr)"], [style*="repeat(3, 1fr)"] { grid-template-columns: repeat(2,1fr) !important; }
+    [style*="repeat(4,1fr)"], [style*="repeat(4, 1fr)"] { grid-template-columns: repeat(2,1fr) !important; }
+    [style*="repeat(5,1fr)"], [style*="repeat(5, 1fr)"] { grid-template-columns: repeat(2,1fr) !important; }
+    [style*="grid-column:span 2"] { grid-column: auto !important; }
+    [style*="grid-row:span 2"] { grid-row: auto !important; }
+    [style*="grid-auto-rows:240px"] { grid-auto-rows: 220px !important; }
+    [style*="padding:64px"] { padding-top: 40px !important; padding-bottom: 24px !important; }
+    h1 { font-size: 42px !important; }
+    h2 { font-size: 34px !important; }
+  }
+  @media (max-width: 600px) {
+    section { padding-left: 18px !important; padding-right: 18px !important; }
+    [style*="repeat(3,1fr)"], [style*="repeat(3, 1fr)"], [style*="repeat(4,1fr)"], [style*="repeat(4, 1fr)"], [style*="repeat(5,1fr)"], [style*="repeat(5, 1fr)"] { grid-template-columns: 1fr !important; }
+    [style*="grid-template-columns:1fr 1fr 1fr auto"] { grid-template-columns: 1fr 1fr !important; gap: 6px; }
+    [style*="grid-template-columns:1fr 190px 210px"] { grid-template-columns: 1fr 54px 62px !important; }
+    [style*="grid-template-columns:1fr 190px 210px"] > div { padding-left: 12px !important; padding-right: 8px !important; font-size: 13px !important; }
+    h1 { font-size: 34px !important; }
+    h2 { font-size: 28px !important; }
+    header nav { padding: 12px 16px !important; }
+    header nav > div:nth-of-type(2) a[href^="tel"] { display: none !important; }
+  }
+</style>
+</helmet>
+
+<div ref="{{ setRoot }}" style="--cream:#FDFCF9; --char:#1A1A1A; --taupe:#8B7D6B; --gold:#D4AF37; --taupe-line:rgba(139,125,107,.2); --radius:24px; background:var(--cream); overflow-x:hidden;">
+
+  <!-- ================= NAV ================= -->
+  <header style="position:sticky; top:0; z-index:50; height:80px; background:rgba(255,255,255,.95); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-bottom:1px solid var(--taupe-line);">
+    <nav style="max-width:1280px; margin:0 auto; height:100%; padding:0 40px; display:flex; align-items:center; justify-content:space-between;">
+      <a href="#" style="display:flex; align-items:center; gap:12px;">
+        <span style="width:22px; height:22px; background:var(--char); border-radius:5px; display:inline-block;"></span>
+        <span style="font-family:'Manrope'; font-weight:800; font-size:20px; letter-spacing:0.12em;">ПРОФИБУД</span>
+      </a>
+      <div style="display:flex; align-items:center; gap:36px; font-size:15px; font-weight:500;">
+        <a href="Estate Landing.dc.html" class="nav-link">Главная</a>
+        <div class="has-drop">
+          <a href="Projects.dc.html" class="nav-link" style="display:flex; align-items:center; gap:5px;">Проекты
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </a>
+          <div class="drop">
+            <a href="Projects-Dachnye.dc.html" class="drop-item">Дачные дома<span class="cnt">15</span></a>
+            <a href="Projects-Do70.dc.html" class="drop-item">Дома до 70 м²<span class="cnt">14</span></a>
+            <a href="Projects-Do120.dc.html" class="drop-item">Дома до 120 м²<span class="cnt">75</span></a>
+            <a href="Projects-Do180.dc.html" class="drop-item">Дома 120–180 м²<span class="cnt">61</span></a>
+          </div>
+        </div>
+        <div class="has-drop">
+          <a href="Services.dc.html" class="nav-link" style="display:flex; align-items:center; gap:5px;">Услуги
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </a>
+          <div class="drop">
+            <a href="Services.dc.html" class="drop-item">Дома из газосиликата</a>
+            <a href="Services.dc.html" class="drop-item">Монолитное строительство</a>
+            <a href="Services-Terrazzo.dc.html" class="drop-item">Бетонно-мозаичные полы</a>
+          </div>
+        </div>
+        <a href="Works.dc.html" class="nav-link">Наши работы</a>
+        <a href="#contact" class="nav-link">Контакты</a>
+      </div>
+      <div style="display:flex; align-items:center; gap:24px;">
+        <a href="tel:+375298686416" style="display:flex; align-items:center; gap:8px; font-size:15px; font-weight:600; white-space:nowrap;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          +375 (29) 86-86-416
+        </a>
+        <a href="#contact" style="background:var(--char); color:var(--cream); padding:10px 24px; border-radius:12px; font-size:15px; font-weight:600; transition:opacity .3s ease;" style-hover="{{ btnHover }}">Обратный звонок</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section style="max-width:1280px; margin:0 auto; padding:48px 40px 160px; display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:center;">
+    <div>
+      <h1 style="font-size:60px; line-height:1.02; font-weight:800;">Строительство домов <span style="font-weight:500; font-style:italic; color:var(--taupe);">под ключ</span> в Гродно и области</h1>
+      <p style="font-size:18px; line-height:1.6; color:#57534e; margin:28px 0 40px; max-width:480px;">От подбора участка и проектирования до отделки. Газосиликатные, каркасные дома и строительство по системе VELOX.</p>
+      <div style="display:flex; align-items:center; gap:16px; margin-bottom:40px;">
+        <a href="#contact" style="background:var(--char); color:var(--cream); padding:15px 30px; border-radius:12px; font-size:16px; font-weight:600; transition:opacity .3s ease;" style-hover="{{ btnHover }}">Рассчитать стоимость</a>
+        <a href="#projects" style="padding:15px 8px; font-size:16px; font-weight:600; border-bottom:1px solid var(--char);">Смотреть проекты</a>
+      </div>
+      <div style="display:flex; align-items:center; gap:24px;">
+        <div style="display:flex; align-items:center;">
+          <div style="width:48px; height:48px; border-radius:50%; overflow:hidden; border:2px solid var(--cream); background:#e7e2d8;"><image-slot id="hero-av-1" shape="circle" placeholder=""></image-slot></div>
+          <div style="width:48px; height:48px; border-radius:50%; overflow:hidden; border:2px solid var(--cream); background:#ddd6c9; margin-left:-14px;"><image-slot id="hero-av-2" shape="circle" placeholder=""></image-slot></div>
+          <div style="width:48px; height:48px; border-radius:50%; overflow:hidden; border:2px solid var(--cream); background:#d4ccbc; margin-left:-14px;"><image-slot id="hero-av-3" shape="circle" placeholder=""></image-slot></div>
+          <div style="width:48px; height:48px; border-radius:50%; border:2px solid var(--cream); background:var(--gold); color:var(--char); margin-left:-14px; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; font-family:'Manrope';">5<span style="font-size:10px;">лет</span></div>
+        </div>
+        <div style="font-size:14px; line-height:1.4; color:#57534e;"><strong style="color:var(--char);">Гарантия 5 лет</strong><br>официальный договор</div>
+      </div>
+    </div>
+
+    <div style="position:relative;">
+      <div style="aspect-ratio:4/3; border-radius:28px; overflow:hidden; box-shadow:0 40px 80px -20px rgba(26,26,26,.25); background:#e7e2d8;">
+        <image-slot id="hero-main" shape="rect" placeholder="Фото построенного дома"></image-slot>
+      </div>
+      <!-- floating search bar -->
+      <div style="position:absolute; left:50%; bottom:0; transform:translate(-50%,50%); width:112%; max-width:640px; background:#fff; border:1px solid var(--taupe-line); border-radius:20px; box-shadow:0 24px 48px -16px rgba(26,26,26,.2); padding:14px; display:grid; grid-template-columns:1fr 1fr 1fr auto; align-items:center;">
+        <div style="padding:6px 20px; border-right:1px solid var(--taupe-line);">
+          <div style="font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:var(--taupe); font-weight:600; margin-bottom:4px;">Тип дома</div>
+          <div style="font-size:15px; font-weight:700; font-family:'Manrope';">Газосиликат</div>
+        </div>
+        <div style="padding:6px 20px; border-right:1px solid var(--taupe-line);">
+          <div style="font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:var(--taupe); font-weight:600; margin-bottom:4px;">Площадь</div>
+          <div style="font-size:15px; font-weight:700; font-family:'Manrope';">100–150 м²</div>
+        </div>
+        <div style="padding:6px 20px; border-right:1px solid var(--taupe-line);">
+          <div style="font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:var(--taupe); font-weight:600; margin-bottom:4px;">Регион</div>
+          <div style="font-size:15px; font-weight:700; font-family:'Manrope';">Гродно и обл.</div>
+        </div>
+        <button style="height:100%; min-height:56px; background:var(--char); color:var(--cream); border:none; border-radius:14px; padding:0 22px; display:flex; align-items:center; gap:10px; cursor:pointer; font-family:'Manrope'; font-size:15px; font-weight:600; transition:opacity .3s ease;" style-hover="{{ btnHover }}">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          Подобрать
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ADVANTAGES ================= -->
+  <section id="services" style="max-width:1280px; margin:0 auto; padding:96px 40px;">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:end; margin-bottom:80px;">
+      <div>
+        <div style="font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:20px;">— Почему мы</div>
+        <h2 style="font-size:44px; line-height:1.05; font-weight:800; max-width:520px;">Строим надёжно, честно и по фиксированной цене</h2>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:32px;">
+        <div>
+          <div style="font-size:40px; font-weight:800; font-family:'Manrope';">10<span style="color:var(--taupe);">лет</span></div>
+          <div style="font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--taupe); font-weight:600; margin-top:8px;">На рынке</div>
+        </div>
+        <div>
+          <div style="font-size:40px; font-weight:800; font-family:'Manrope';">5<span style="color:var(--taupe);">лет</span></div>
+          <div style="font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--taupe); font-weight:600; margin-top:8px;">Гарантия</div>
+        </div>
+        <div>
+          <div style="font-size:40px; font-weight:800; font-family:'Manrope';">240</div>
+          <div style="font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--taupe); font-weight:600; margin-top:8px;">По Указу №240</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:24px;">
+      <div class="about-card" style="padding:32px; border:1px solid var(--taupe-line); border-radius:var(--radius); background:#fff;">
+        <div class="about-icon" style="width:56px; height:56px; border-radius:16px; background:#f5f2ec; display:flex; align-items:center; justify-content:center; margin-bottom:28px;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h4 style="font-size:20px; font-weight:700; margin-bottom:12px;">Гарантия на работы</h4>
+        <p style="font-size:15px; line-height:1.6; color:#57534e;">Официальное заключение договора. Гарантия на выполненные работы — 5 лет.</p>
+      </div>
+      <div class="about-card" style="padding:32px; border:1px solid var(--taupe-line); border-radius:var(--radius); background:#fff;">
+        <div class="about-icon" style="width:56px; height:56px; border-radius:16px; background:#f5f2ec; display:flex; align-items:center; justify-content:center; margin-bottom:28px;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <h4 style="font-size:20px; font-weight:700; margin-bottom:12px;">Цены ниже рыночных</h4>
+        <p style="font-size:15px; line-height:1.6; color:#57534e;">Стоимость 1 м² дома ниже, чем у конкурентов, — без потери качества.</p>
+      </div>
+      <div class="about-card" style="padding:32px; border:1px solid var(--taupe-line); border-radius:var(--radius); background:#fff;">
+        <div class="about-icon" style="width:56px; height:56px; border-radius:16px; background:#f5f2ec; display:flex; align-items:center; justify-content:center; margin-bottom:28px;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M8 4v16"/></svg>
+        </div>
+        <h4 style="font-size:20px; font-weight:700; margin-bottom:12px;">Фиксированная цена</h4>
+        <p style="font-size:15px; line-height:1.6; color:#57534e;">При заказе строительства мы фиксируем окончательную цену в договоре.</p>
+      </div>
+      <div class="about-card" style="padding:32px; border:1px solid var(--taupe-line); border-radius:var(--radius); background:#fff;">
+        <div class="about-icon" style="width:56px; height:56px; border-radius:16px; background:#f5f2ec; display:flex; align-items:center; justify-content:center; margin-bottom:28px;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <h4 style="font-size:20px; font-weight:700; margin-bottom:12px;">Опыт работы 10 лет</h4>
+        <p style="font-size:15px; line-height:1.6; color:#57534e;">Все сотрудники имеют соответствующую квалификацию и большой опыт.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FEATURED PROJECTS ================= -->
+  <section id="projects" style="max-width:1280px; margin:0 auto; padding:96px 40px;">
+    <div style="display:flex; align-items:end; justify-content:space-between; margin-bottom:56px;">
+      <div>
+        <div style="font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:20px;">— Наши проекты</div>
+        <h2 style="font-size:44px; line-height:1.05; font-weight:800;">Проекты домов</h2>
+      </div>
+      <a href="#" style="display:flex; align-items:center; gap:10px; font-size:15px; font-weight:600; padding-bottom:6px; border-bottom:1px solid var(--char);">Все проекты
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+      </a>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:28px;">
+      <sc-for list="{{ projects }}" as="p" hint-placeholder-count="6">
+        <div class="prop-card" style="background:#fff; border:1px solid var(--taupe-line); border-radius:var(--radius); overflow:hidden;">
+          <div style="position:relative; aspect-ratio:4/3; overflow:hidden;">
+            <div class="prop-img" style="position:absolute; inset:0; background:#e2dccf;"><image-slot id="{{ p.slot }}" shape="rect" placeholder="Фото проекта"></image-slot></div>
+            <div style="position:absolute; top:14px; left:14px; z-index:2; background:rgba(255,255,255,.92); backdrop-filter:blur(6px); color:var(--char); font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:6px 12px; border-radius:100px;">{{ p.tag }}</div>
+            <button class="heart-btn" style="position:absolute; top:12px; right:12px; z-index:2; width:38px; height:38px; border-radius:50%; border:none; background:rgba(255,255,255,.85); backdrop-filter:blur(6px); color:var(--char); display:flex; align-items:center; justify-content:center; cursor:pointer;">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.49 4.04 3 5.5l7 7Z"/></svg>
+            </button>
+          </div>
+          <div style="padding:24px;">
+            <h4 style="font-size:20px; font-weight:700; margin-bottom:8px;">{{ p.name }}</h4>
+            <div style="display:flex; align-items:center; gap:6px; font-size:14px; color:var(--taupe); margin-bottom:18px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg>
+              {{ p.type }}
+            </div>
+            <div style="font-size:24px; font-weight:800; font-family:'Manrope'; margin-bottom:20px;">{{ p.area }}</div>
+            <div style="display:flex; gap:24px; border-top:1px solid var(--taupe-line); padding-top:16px; font-size:14px; color:#57534e;">
+              <span style="display:flex; align-items:center; gap:7px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v3"/><path d="M2 11v5a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M6 18v2M18 18v2"/></svg>{{ p.beds }}</span>
+              <span style="display:flex; align-items:center; gap:7px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.7 3 4 3.7 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/><path d="M4 13h18M6 19l-1 2M18 19l1 2"/></svg>{{ p.baths }}</span>
+              <span style="display:flex; align-items:center; gap:7px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>{{ p.floors }}</span>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ================= WORKS ================= -->
+  <section id="works" style="max-width:1280px; margin:0 auto; padding:96px 40px;">
+    <div style="text-align:center; margin-bottom:56px;">
+      <div style="font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:20px;">— Наши работы</div>
+      <h2 style="font-size:44px; line-height:1.05; font-weight:800;">Выполненные объекты</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:28px;">
+      <div class="prop-card" style="position:relative; aspect-ratio:16/10; border-radius:var(--radius); overflow:hidden; border:1px solid var(--taupe-line);">
+        <div class="prop-img" style="position:absolute; inset:0; background:#ddd6c9;"><image-slot id="work-1" shape="rect" placeholder="Газосиликатные дома"></image-slot></div>
+        <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(26,26,26,.7), transparent 55%); display:flex; align-items:flex-end; padding:32px;">
+          <div style="color:var(--cream);">
+            <h4 style="font-size:26px; font-weight:800; margin-bottom:6px;">Газосиликатные дома</h4>
+            <span style="font-size:14px; color:rgba(253,252,249,.75);">Тёплые, долговечные, под ключ</span>
+          </div>
+        </div>
+      </div>
+      <div class="prop-card" style="position:relative; aspect-ratio:16/10; border-radius:var(--radius); overflow:hidden; border:1px solid var(--taupe-line);">
+        <div class="prop-img" style="position:absolute; inset:0; background:#d4ccbc;"><image-slot id="work-2" shape="rect" placeholder="Общестроительные работы"></image-slot></div>
+        <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(26,26,26,.7), transparent 55%); display:flex; align-items:flex-end; padding:32px;">
+          <div style="color:var(--cream);">
+            <h4 style="font-size:26px; font-weight:800; margin-bottom:6px;">Общестроительные работы</h4>
+            <span style="font-size:14px; color:rgba(253,252,249,.75);">Фундаменты, кладка, кровля, отделка</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= HOW IT WORKS ================= -->
+  <section id="process" style="max-width:1280px; margin:0 auto; padding:96px 40px;">
+    <div style="text-align:center; margin-bottom:64px;">
+      <div style="font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:20px;">— Как заказать дом</div>
+      <h2 style="font-size:44px; line-height:1.05; font-weight:800;">Пять шагов до вашего дома</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:20px;">
+      <div style="position:relative; background:#f5f2ec; border-radius:var(--radius); padding:32px; overflow:hidden;">
+        <span style="position:absolute; top:12px; right:18px; font-family:'Manrope'; font-weight:800; font-size:56px; color:rgba(26,26,26,.08); line-height:1;">01</span>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:48px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <h4 style="font-size:19px; font-weight:700; margin-bottom:12px;">Обратиться к нам</h4>
+        <p style="font-size:14px; line-height:1.6; color:#57534e;">Звонок или заявка на сайте. Встреча в офисе и консультация инженера.</p>
+      </div>
+      <div style="position:relative; background:#f5f2ec; border-radius:var(--radius); padding:32px; overflow:hidden;">
+        <span style="position:absolute; top:12px; right:18px; font-family:'Manrope'; font-weight:800; font-size:56px; color:rgba(26,26,26,.08); line-height:1;">02</span>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:48px;"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg>
+        <h4 style="font-size:19px; font-weight:700; margin-bottom:12px;">Выбрать тип дома</h4>
+        <p style="font-size:14px; line-height:1.6; color:#57534e;">Газосиликат, VELOX или каркас. Расскажем о плюсах каждого и поможем решить.</p>
+      </div>
+      <div style="position:relative; background:#f5f2ec; border-radius:var(--radius); padding:32px; overflow:hidden;">
+        <span style="position:absolute; top:12px; right:18px; font-family:'Manrope'; font-weight:800; font-size:56px; color:rgba(26,26,26,.08); line-height:1;">03</span>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:48px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg>
+        <h4 style="font-size:19px; font-weight:700; margin-bottom:12px;">Подготовка проекта</h4>
+        <p style="font-size:14px; line-height:1.6; color:#57534e;">Подберём готовый проект под ваши требования или разработаем индивидуальный.</p>
+      </div>
+      <div style="position:relative; background:#f5f2ec; border-radius:var(--radius); padding:32px; overflow:hidden;">
+        <span style="position:absolute; top:12px; right:18px; font-family:'Manrope'; font-weight:800; font-size:56px; color:rgba(26,26,26,.08); line-height:1;">04</span>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:48px;"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h8M8 14h5"/></svg>
+        <h4 style="font-size:19px; font-weight:700; margin-bottom:12px;">Расчёт стоимости</h4>
+        <p style="font-size:14px; line-height:1.6; color:#57534e;">Архитектор готовит проект с учётом пожеланий, проходят согласования.</p>
+      </div>
+      <div style="position:relative; background:#f5f2ec; border-radius:var(--radius); padding:32px; overflow:hidden;">
+        <span style="position:absolute; top:12px; right:18px; font-family:'Manrope'; font-weight:800; font-size:56px; color:rgba(26,26,26,.08); line-height:1;">05</span>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:48px;"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg>
+        <h4 style="font-size:19px; font-weight:700; margin-bottom:12px;">Начало строительства</h4>
+        <p style="font-size:14px; line-height:1.6; color:#57534e;">Строим в установленные сроки с полным контролем всех этапов.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section style="max-width:1280px; margin:0 auto; padding:96px 40px;">
+    <div style="background:#f5f2ec; border-radius:var(--radius); padding:64px; display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;">
+      <div>
+        <div style="font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:20px;">— О компании</div>
+        <h2 style="font-size:40px; line-height:1.08; font-weight:800; margin-bottom:24px;">Строим дома, дачи и бани по всей Беларуси</h2>
+        <p style="font-size:16px; line-height:1.7; color:#57534e; margin-bottom:20px;">Наша компания занимается строительством жилых домов, дач и бань под ключ, которые будут долгое время радовать вас и вашу семью.</p>
+        <p style="font-size:16px; line-height:1.7; color:#57534e; margin-bottom:32px;">Опыт работы — 10 лет. За это время сложилась слаженная команда: от рабочих до руководящего состава. Все сотрудники имеют соответствующие разряды, квалификацию и большой опыт частного домостроения.</p>
+        <a href="#contact" style="background:var(--char); color:var(--cream); padding:15px 30px; border-radius:12px; font-size:16px; font-weight:600; display:inline-block; transition:opacity .3s ease;" style-hover="{{ btnHover }}">Получить консультацию</a>
+      </div>
+      <div style="aspect-ratio:4/3; border-radius:20px; overflow:hidden; background:#ddd6c9;"><image-slot id="about-img" shape="rect" placeholder="Команда / объект"></image-slot></div>
+    </div>
+  </section>
+
+  <!-- ================= CTA LEAD CAPTURE ================= -->
+  <section id="contact" style="background:var(--char); color:var(--cream); margin-top:32px; background-image:radial-gradient(rgba(253,252,249,.10) 1px, transparent 1px); background-size:26px 26px;">
+    <div style="max-width:1280px; margin:0 auto; padding:112px 40px; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;">
+      <div>
+        <div style="font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:24px;">— Бесплатный расчёт</div>
+        <h2 style="font-size:52px; line-height:1.04; font-weight:800; margin-bottom:28px;">Рассчитаем стоимость вашего дома</h2>
+        <p style="font-size:18px; line-height:1.6; color:rgba(253,252,249,.65); max-width:440px; margin-bottom:44px;">Оставьте заявку — специалист свяжется с вами и предоставит предварительную смету. Есть смета конкурента? Пришлите её и получите скидку.</p>
+        <div style="display:flex; flex-direction:column; gap:18px; font-size:16px;">
+          <a href="tel:+375298686416" style="display:flex; align-items:center; gap:14px; color:var(--cream);">
+            <span style="width:44px; height:44px; border-radius:12px; border:1px solid rgba(253,252,249,.2); display:flex; align-items:center; justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+            +375 (29) 86-86-416
+          </a>
+          <div style="display:flex; align-items:center; gap:14px; color:rgba(253,252,249,.85);">
+            <span style="width:44px; height:44px; border-radius:12px; border:1px solid rgba(253,252,249,.2); display:flex; align-items:center; justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+            г. Гродно, ул. М. Горького 91, офис 601
+          </div>
+          <a href="https://www.instagram.com/profibud.by/" style="display:flex; align-items:center; gap:14px; color:rgba(253,252,249,.85);">
+            <span style="width:44px; height:44px; border-radius:12px; border:1px solid rgba(253,252,249,.2); display:flex; align-items:center; justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></span>
+            instagram.com/profibud.by
+          </a>
+        </div>
+      </div>
+
+      <div style="background:#fff; color:var(--char); border-radius:28px; padding:40px;">
+        <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+          <div style="text-align:center; padding:48px 20px;">
+            <div style="width:64px; height:64px; border-radius:50%; background:#f5f2ec; display:flex; align-items:center; justify-content:center; margin:0 auto 24px;">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            </div>
+            <h3 style="font-size:26px; font-weight:800; margin-bottom:10px;">Заявка принята</h3>
+            <p style="font-size:15px; color:#57534e;">Спасибо! Наш специалист свяжется с вами в ближайшее время.</p>
+          </div>
+        </sc-if>
+        <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ onSubmit }}">
+            <h3 style="font-size:24px; font-weight:800; margin-bottom:24px;">Оставить заявку</h3>
+            <div style="display:grid; gap:26px;">
+              <div>
+                <label style="display:block; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--taupe); font-weight:700; margin-bottom:8px;">Ваше имя</label>
+                <input type="text" placeholder="Иван Иванов" required style="width:100%; border:none; border-bottom:1px solid var(--taupe-line); background:transparent; padding:8px 0; font-family:'Manrope'; font-size:16px; color:var(--char); outline:none;" style-focus="{{ inputFocus }}" />
+              </div>
+              <div>
+                <label style="display:block; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--taupe); font-weight:700; margin-bottom:8px;">Телефон</label>
+                <input type="tel" placeholder="+375 (__) ___-__-__" required style="width:100%; border:none; border-bottom:1px solid var(--taupe-line); background:transparent; padding:8px 0; font-family:'Manrope'; font-size:16px; color:var(--char); outline:none;" style-focus="{{ inputFocus }}" />
+              </div>
+              <div>
+                <label style="display:block; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--taupe); font-weight:700; margin-bottom:8px;">Тип дома</label>
+                <input type="text" placeholder="Газосиликат / VELOX / каркас" style="width:100%; border:none; border-bottom:1px solid var(--taupe-line); background:transparent; padding:8px 0; font-family:'Manrope'; font-size:16px; color:var(--char); outline:none;" style-focus="{{ inputFocus }}" />
+              </div>
+              <div>
+                <label style="display:block; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--taupe); font-weight:700; margin-bottom:8px;">Комментарий</label>
+                <input type="text" placeholder="Площадь, участок, пожелания…" style="width:100%; border:none; border-bottom:1px solid var(--taupe-line); background:transparent; padding:8px 0; font-family:'Manrope'; font-size:16px; color:var(--char); outline:none;" style-focus="{{ inputFocus }}" />
+              </div>
+              <button type="submit" class="send-btn" style="width:100%; background:var(--char); color:var(--cream); border:none; border-radius:12px; padding:16px; margin-top:6px; font-family:'Manrope'; font-size:16px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px; transition:opacity .3s ease;" style-hover="{{ btnHover }}">
+                Отправить заявку
+                <span class="send-icon" style="display:inline-flex;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></span>
+              </button>
+            </div>
+          </form>
+        </sc-if>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer style="max-width:1280px; margin:0 auto; padding:48px 40px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--taupe-line);">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <span style="width:20px; height:20px; background:var(--char); border-radius:5px; display:inline-block;"></span>
+      <span style="font-family:'Manrope'; font-weight:800; font-size:18px; letter-spacing:0.12em;">ПРОФИБУД</span>
+    </div>
+    <div style="font-size:14px; color:var(--taupe);">© 2026 Строительная компания «ПРОФИБУД». Гродно, РБ.</div>
+    <div style="display:flex; gap:28px; font-size:14px; color:#57534e;">
+      <a href="#projects">Проекты</a>
+      <a href="#services">Услуги</a>
+      <a href="https://www.instagram.com/profibud.by/">Instagram</a>
+    </div>
+  </footer>
+
+  <!-- ================= SMOOTH CURSOR (Magic UI) ================= -->
+  <div ref="{{ setCursor }}" style="position:fixed; top:0; left:0; z-index:9999; pointer-events:none; opacity:0; will-change:transform; transform:translate(-100px,-100px);">
+    <svg width="26" height="28" viewBox="0 0 50 54" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 6px 12px rgba(26,26,26,.28));">
+      <path d="M42.6817 41.1495L27.5103 6.79925C26.7269 5.02557 24.2082 5.02558 23.3927 6.79925L7.59814 41.1495C6.75833 42.9759 8.52712 44.8902 10.4125 44.1954L24.3757 39.0496C24.7745 38.9034 25.2148 38.9034 25.6136 39.0496L39.5768 44.1954C41.4622 44.8902 43.231 42.9759 42.6817 41.1495Z" fill="#1A1A1A"/>
+      <path d="M43.7146 40.6933L28.5432 6.34306C27.3556 3.65428 23.5731 3.65429 22.3856 6.34306L6.59102 40.6933C5.31226 43.4382 8.00365 46.3437 10.8546 45.2932L24.8178 40.1474C24.9845 40.0865 25.1993 40.0865 25.366 40.1474L39.3292 45.2932C42.1802 46.3437 44.9992 43.4382 43.7146 40.6933Z" stroke="#FDFCF9" stroke-width="2.25825"/>
+    </svg>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1280, &quot;height&quot;: 4200 },
+  &quot;goldAccent&quot;: { &quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#D4AF37&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Theme&quot; },
+  &quot;cardRadius&quot;: { &quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 24, &quot;min&quot;: 8, &quot;max&quot;: 32, &quot;step&quot;: 2, &quot;unit&quot;: &quot;px&quot;, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Theme&quot; }
+}">
+class Component extends DCLogic {
+  state = { submitted: false };
+
+  componentDidMount() { this.applyTheme(); this.initSmoothCursor(); }
+  componentDidUpdate() { this.applyTheme(); }
+  componentWillUnmount() {
+    if (this._raf) cancelAnimationFrame(this._raf);
+    if (this._onMove) window.removeEventListener('mousemove', this._onMove);
+    document.documentElement.classList.remove('smooth-cursor-on');
+  }
+
+  applyTheme() {
+    if (!this.root) return;
+    const g = this.props.goldAccent;
+    const r = this.props.cardRadius;
+    if (g) this.root.style.setProperty('--gold', g);
+    if (r != null) this.root.style.setProperty('--radius', r + 'px');
+  }
+
+  initSmoothCursor() {
+    const el = this.cursor;
+    if (!el) return;
+    if (window.matchMedia && !window.matchMedia('(pointer: fine)').matches) return;
+    document.documentElement.classList.add('smooth-cursor-on');
+
+    const k = 400, c = 45, mass = 1;
+    let tx = window.innerWidth / 2, ty = window.innerHeight / 2;
+    let px = tx, py = ty, vx = 0, vy = 0;
+    let angle = 0, targetAngle = 0, seen = false;
+
+    const onMove = (e) => { tx = e.clientX; ty = e.clientY; if (!seen) { seen = true; px = tx; py = ty; el.style.opacity = '1'; } };
+    window.addEventListener('mousemove', onMove);
+    this._onMove = onMove;
+
+    let last = performance.now();
+    const tick = (now) => {
+      let dt = Math.min((now - last) / 1000, 0.033); last = now;
+      const h = 1 / 240; let t = dt;
+      while (t > 0) {
+        const s = Math.min(h, t); t -= s;
+        vx += ((-k * (px - tx) - c * vx) / mass) * s; px += vx * s;
+        vy += ((-k * (py - ty) - c * vy) / mass) * s; py += vy * s;
+      }
+      const speed = Math.hypot(vx, vy);
+      if (speed > 25) targetAngle = Math.atan2(vy, vx) * 180 / Math.PI + 90;
+      let diff = ((targetAngle - angle + 540) % 360) - 180;
+      angle += diff * Math.min(dt * 12, 1);
+      el.style.transform = `translate(${px}px, ${py}px) translate(-50%, -50%) rotate(${angle}deg)`;
+      this._raf = requestAnimationFrame(tick);
+    };
+    this._raf = requestAnimationFrame(tick);
+  }
+
+  renderVals() {
+    return {
+      setRoot: (el) => { this.root = el; },
+      setCursor: (el) => { this.cursor = el; },
+      submitted: this.state.submitted,
+      notSubmitted: !this.state.submitted,
+      onSubmit: (e) => { e.preventDefault(); this.setState({ submitted: true }); },
+      btnHover: { opacity: 0.9 },
+      inputFocus: { borderBottomColor: '#1A1A1A' },
+      projects: [
+        { slot: 'prj-1', tag: 'Газосиликат', name: 'Проект «Гродно-100»', type: 'Одноэтажный', area: '100 м²', beds: '3 комн.', baths: '1 с/у', floors: '1 этаж' },
+        { slot: 'prj-2', tag: 'VELOX', name: 'Проект «Неман»', type: 'Мансардный', area: '101,2 м²', beds: '4 комн.', baths: '2 с/у', floors: '2 этажа' },
+        { slot: 'prj-3', tag: 'Газосиликат', name: 'Проект «Зелёный»', type: 'Одноэтажный', area: '102 м²', beds: '3 комн.', baths: '1 с/у', floors: '1 этаж' },
+        { slot: 'prj-4', tag: 'Каркас', name: 'Проект «Лесной»', type: 'Мансардный', area: '102,9 м²', beds: '4 комн.', baths: '2 с/у', floors: '2 этажа' },
+        { slot: 'prj-5', tag: 'VELOX', name: 'Проект «Панорама»', type: 'Двухэтажный', area: '103,2 м²', beds: '5 комн.', baths: '2 с/у', floors: '2 этажа' },
+        { slot: 'prj-6', tag: 'Газосиликат', name: 'Проект «Уют»', type: 'Одноэтажный', area: '103,45 м²', beds: '4 комн.', baths: '1 с/у', floors: '1 этаж' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Manrope', system-ui, sans-serif; color: #1A1A1A; background: #FDFCF9; -webkit-font-smoothing: antialiased; }
+  h1,h2,h3,h4,h5 { font-family: 'Manrope', system-ui, sans-serif; letter-spacing: -0.02em; }
+  a { color: inherit; text-decoration: none; }
+  a:hover { color: #8B7D6B; }
+  ::selection { background: #D4AF37; color: #1A1A1A; }
+  .nav-link { position: relative; }
+  .nav-link::after { content:''; position:absolute; left:50%; bottom:-6px; width:0; height:1px; background:#1A1A1A; transform:translateX(-50%); transition:width .35s cubic-bezier(.4,0,.2,1); }
+  .nav-link:hover::after { width:100%; }
+  .has-drop { position: relative; }
+  .has-drop::after { content:''; position:absolute; top:100%; left:-20px; right:-20px; height:24px; }
+  .drop { position:absolute; top:calc(100% + 18px); left:50%; transform:translateX(-50%) translateY(8px); background:#fff; border:1px solid rgba(139,125,107,.2); border-radius:16px; padding:8px; min-width:256px; box-shadow:0 24px 48px -16px rgba(26,26,26,.22); opacity:0; visibility:hidden; transition:opacity .25s ease, transform .25s ease; z-index:60; }
+  .has-drop:hover .drop { opacity:1; visibility:visible; transform:translateX(-50%) translateY(0); }
+  .drop-item { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:11px 14px; border-radius:10px; font-size:14px; font-weight:500; color:#1A1A1A; transition:background .2s ease; }
+  .drop-item:hover { background:#f5f2ec; color:#1A1A1A; }
+  .drop-item .cnt { color:#8B7D6B; font-size:12px; font-weight:700; }
+  .prop-img { transition: transform .5s ease-in-out; }
+  .prop-card:hover .prop-img { transform: scale(1.05); }
+  .send-icon { transition: transform .35s ease; }
+  .send-btn:hover .send-icon { transform: translate(4px,-4px); }
+  @media (pointer: fine) {
+    html.smooth-cursor-on, html.smooth-cursor-on * { cursor: none !important; }
+    html.smooth-cursor-on input, html.smooth-cursor-on textarea, html.smooth-cursor-on select { cursor: text !important; }
+  }
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 1024px) {
+    header { height: auto !important; }
+    header nav { flex-wrap: wrap !important; padding: 14px 24px !important; row-gap: 12px !important; }
+    header nav > div:nth-of-type(1) { order: 3; width: 100%; overflow-x: auto; justify-content: flex-start !important; gap: 26px !important; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
+    header nav > div:nth-of-type(1) .nav-link { white-space: nowrap; }
+    .has-drop .drop { display: none !important; }
+    h1 { font-size: 46px !important; }
+  }
+  @media (max-width: 900px) {
+    section { padding-left: 24px !important; padding-right: 24px !important; }
+    [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; gap: 40px !important; }
+    [style*="repeat(3,1fr)"], [style*="repeat(3, 1fr)"] { grid-template-columns: repeat(2,1fr) !important; }
+    [style*="repeat(4,1fr)"], [style*="repeat(4, 1fr)"] { grid-template-columns: repeat(2,1fr) !important; }
+    [style*="repeat(5,1fr)"], [style*="repeat(5, 1fr)"] { grid-template-columns: repeat(2,1fr) !important; }
+    [style*="grid-column:span 2"] { grid-column: auto !important; }
+    [style*="grid-row:span 2"] { grid-row: auto !important; }
+    [style*="grid-auto-rows:240px"] { grid-auto-rows: 220px !important; }
+    [style*="padding:64px"] { padding-top: 40px !important; padding-bottom: 24px !important; }
+    h1 { font-size: 42px !important; }
+    h2 { font-size: 34px !important; }
+  }
+  @media (max-width: 600px) {
+    section { padding-left: 18px !important; padding-right: 18px !important; }
+    [style*="repeat(3,1fr)"], [style*="repeat(3, 1fr)"], [style*="repeat(4,1fr)"], [style*="repeat(4, 1fr)"], [style*="repeat(5,1fr)"], [style*="repeat(5, 1fr)"] { grid-template-columns: 1fr !important; }
+    [style*="grid-template-columns:1fr 1fr 1fr auto"] { grid-template-columns: 1fr 1fr !important; gap: 6px; }
+    [style*="grid-template-columns:1fr 190px 210px"] { grid-template-columns: 1fr 54px 62px !important; }
+    [style*="grid-template-columns:1fr 190px 210px"] > div { padding-left: 12px !important; padding-right: 8px !important; font-size: 13px !important; }
+    h1 { font-size: 34px !important; }
+    h2 { font-size: 28px !important; }
+    header nav { padding: 12px 16px !important; }
+    header nav > div:nth-of-type(2) a[href^="tel"] { display: none !important; }
+  }
+</style>
+</helmet>
+
+<div style="--cream:#FDFCF9; --char:#1A1A1A; --taupe:#8B7D6B; --gold:#D4AF37; --taupe-line:rgba(139,125,107,.2); --radius:24px; background:var(--cream); overflow-x:hidden;">
+  <header style="position:sticky; top:0; z-index:50; height:80px; background:rgba(255,255,255,.95); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-bottom:1px solid var(--taupe-line);">
+    <nav style="max-width:1280px; margin:0 auto; height:100%; padding:0 40px; display:flex; align-items:center; justify-content:space-between;">
+      <a href="Estate Landing.dc.html" style="display:flex; align-items:center; gap:12px;">
+        <span style="width:22px; height:22px; background:var(--char); border-radius:5px; display:inline-block;"></span>
+        <span style="font-weight:800; font-size:20px; letter-spacing:0.12em;">ПРОФИБУД</span>
+      </a>
+      <div style="display:flex; align-items:center; gap:36px; font-size:15px; font-weight:500;">
+        <a href="Estate Landing.dc.html" class="nav-link">Главная</a>
+        <div class="has-drop">
+          <a href="Projects.dc.html" class="nav-link" style="display:flex; align-items:center; gap:5px;">Проекты <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></a>
+          <div class="drop">
+            <a href="Projects-Dachnye.dc.html" class="drop-item">Дачные дома<span class="cnt">15</span></a>
+            <a href="Projects-Do70.dc.html" class="drop-item">Дома до 70 м²<span class="cnt">14</span></a>
+            <a href="Projects-Do120.dc.html" class="drop-item">Дома до 120 м²<span class="cnt">75</span></a>
+            <a href="Projects-Do180.dc.html" class="drop-item">Дома 120–180 м²<span class="cnt">61</span></a>
+          </div>
+        </div>
+        <div class="has-drop">
+          <a href="Services.dc.html" class="nav-link" style="display:flex; align-items:center; gap:5px; color:var(--taupe);">Услуги <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></a>
+          <div class="drop">
+            <a href="Services-Gazosilikat.dc.html" class="drop-item">Дома из газосиликата</a>
+            <a href="Services-Monolit.dc.html" class="drop-item">Монолитное строительство</a>
+            <a href="Services-Terrazzo.dc.html" class="drop-item">Бетонно-мозаичные полы</a>
+          </div>
+        </div>
+        <a href="Works.dc.html" class="nav-link">Наши работы</a>
+        <a href="Estate Landing.dc.html#contact" class="nav-link">Контакты</a>
+      </div>
+      <div style="display:flex; align-items:center; gap:24px;">
+        <a href="tel:+375298686416" style="display:flex; align-items:center; gap:8px; font-size:15px; font-weight:600; white-space:nowrap;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg> +375 (29) 86-86-416</a>
+        <a href="Estate Landing.dc.html#contact" style="background:var(--char); color:var(--cream); padding:10px 24px; border-radius:12px; font-size:15px; font-weight:600; transition:opacity .3s ease;" style-hover="{{ btnHover }}">Обратный звонок</a>
+      </div>
+    </nav>
+  </header>
+  <section style="max-width:1280px; margin:0 auto; padding:64px 40px 12px;">
+    <div style="display:flex; align-items:center; gap:8px; font-size:13px; color:var(--taupe); margin-bottom:24px;"><a href="Estate Landing.dc.html">Главная</a><span>/</span><a href="Services.dc.html">Услуги</a><span>/</span><span style="color:var(--char);">Дома из газосиликата</span></div>
+    <h1 style="font-size:52px; line-height:1.02; font-weight:800;">Дома из газосиликатных блоков</h1>
+    <p style="font-size:18px; line-height:1.6; color:#57534e; margin-top:18px; max-width:700px;">Тёплые и долговечные дома из ячеистого бетона. Наружные стены 400 мм, несущие 300 мм — строим по проекту, с фиксированной ценой и гарантией 5 лет.</p>
+  </section>
+  <section style="max-width:1280px; margin:0 auto; padding:40px 40px 40px;">
+    <div style="aspect-ratio:21/9; border-radius:var(--radius); overflow:hidden; background:#ddd6c9;"><image-slot id="gaz-hero" shape="rect" placeholder="Газосиликатный дом — фото"></image-slot></div>
+  </section>
+  <section style="max-width:1280px; margin:0 auto; padding:24px 40px 96px;">
+    <div style="text-align:center; margin-bottom:48px;"><div style="font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:20px;">— Комплектации</div><h2 style="font-size:36px; line-height:1.05; font-weight:800;">Что входит в стоимость строительства</h2></div>
+    <div style="border:1px solid var(--taupe-line); border-radius:var(--radius); overflow:hidden; background:#fff;">
+      <div style="display:grid; grid-template-columns:1fr 190px 210px; background:var(--char); color:var(--cream);">
+        <div style="padding:20px 28px; font-size:13px; letter-spacing:0.1em; text-transform:uppercase; font-weight:600;">Виды работ</div>
+        <div style="padding:20px 16px; text-align:center; font-size:14px; font-weight:700;">Базовая «коробка»</div>
+        <div style="padding:20px 16px; text-align:center; font-size:14px; font-weight:700; background:rgba(212,175,55,.14);">Под чистовую отделку</div>
+      </div>
+      <sc-for list="{{ groups }}" as="g" hint-placeholder-count="4">
+        <div style="padding:16px 28px; background:#f5f2ec; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; font-weight:700; color:var(--taupe);">{{ g.title }}</div>
+        <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="3">
+          <div style="display:grid; grid-template-columns:1fr 190px 210px; border-top:1px solid var(--taupe-line); align-items:center;">
+            <div style="padding:15px 28px; font-size:14px; line-height:1.45; color:#3f3b34;">{{ r.name }}</div>
+            <div style="padding:15px 16px; text-align:center; font-size:17px;">{{ r.baseEl }}</div>
+            <div style="padding:15px 16px; text-align:center; font-size:17px; background:rgba(212,175,55,.06);">{{ r.finishEl }}</div>
+          </div>
+        </sc-for>
+      </sc-for>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:32px;">
+      <div style="display:flex; gap:14px; padding:22px; border:1px solid var(--taupe-line); border-radius:16px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:1px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><p style="font-size:14px; line-height:1.6; color:#57534e;">Цена работ в договоре подряда остаётся неизменной (кроме доп. работ по желанию заказчика).</p></div>
+      <div style="display:flex; gap:14px; padding:22px; border:1px solid var(--taupe-line); border-radius:16px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:1px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><p style="font-size:14px; line-height:1.6; color:#57534e;">На все материалы — паспорта качества и гарантийные сроки производителя.</p></div>
+      <div style="display:flex; gap:14px; padding:22px; border:1px solid var(--taupe-line); border-radius:16px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:1px;"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg><p style="font-size:14px; line-height:1.6; color:#57534e;">Строительство ведётся под контролем аттестованного технадзора.</p></div>
+      <div style="display:flex; gap:14px; padding:22px; border:1px solid var(--taupe-line); border-radius:16px;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:1px;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><p style="font-size:14px; line-height:1.6; color:#57534e;">После сдачи — журнал работ, акты на скрытые работы и паспорта материалов на руки.</p></div>
+    </div>
+  </section>
+  <section id="contact" style="background:var(--char); color:var(--cream); background-image:radial-gradient(rgba(253,252,249,.10) 1px, transparent 1px); background-size:26px 26px;">
+    <div style="max-width:1280px; margin:0 auto; padding:112px 40px; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;">
+      <div>
+        <div style="font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:24px;">— Бесплатный расчёт</div>
+        <h2 style="font-size:52px; line-height:1.04; font-weight:800; margin-bottom:28px;">Рассчитаем стоимость вашего дома</h2>
+        <p style="font-size:18px; line-height:1.6; color:rgba(253,252,249,.65); max-width:440px;">Оставьте заявку — специалист свяжется с вами и предоставит предварительную смету.</p>
+      </div>
+      <div style="background:#fff; color:var(--char); border-radius:28px; padding:40px;">
+        <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+          <div style="text-align:center; padding:48px 20px;">
+            <div style="width:64px; height:64px; border-radius:50%; background:#f5f2ec; display:flex; align-items:center; justify-content:center; margin:0 auto 24px;"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+            <h3 style="font-size:26px; font-weight:800; margin-bottom:10px;">Заявка принята</h3>
+            <p style="font-size:15px; color:#57534e;">Спасибо! Наш специалист свяжется с вами в ближайшее время.</p>
+          </div>
+        </sc-if>
+        <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ onSubmit }}">
+            <h3 style="font-size:24px; font-weight:800; margin-bottom:24px;">Оставить заявку</h3>
+            <div style="display:grid; gap:26px;">
+              <div><label style="display:block; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--taupe); font-weight:700; margin-bottom:8px;">Ваше имя</label><input type="text" placeholder="Иван Иванов" required style="width:100%; border:none; border-bottom:1px solid var(--taupe-line); background:transparent; padding:8px 0; font-family:'Manrope'; font-size:16px; color:var(--char); outline:none;" style-focus="{{ inputFocus }}" /></div>
+              <div><label style="display:block; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--taupe); font-weight:700; margin-bottom:8px;">Телефон</label><input type="tel" placeholder="+375 (__) ___-__-__" required style="width:100%; border:none; border-bottom:1px solid var(--taupe-line); background:transparent; padding:8px 0; font-family:'Manrope'; font-size:16px; color:var(--char); outline:none;" style-focus="{{ inputFocus }}" /></div>
+              <div><label style="display:block; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--taupe); font-weight:700; margin-bottom:8px;">Комментарий</label><input type="text" placeholder="Тип дома, площадь, пожелания…" style="width:100%; border:none; border-bottom:1px solid var(--taupe-line); background:transparent; padding:8px 0; font-family:'Manrope'; font-size:16px; color:var(--char); outline:none;" style-focus="{{ inputFocus }}" /></div>
+              <button type="submit" class="send-btn" style="width:100%; background:var(--char); color:var(--cream); border:none; border-radius:12px; padding:16px; margin-top:6px; font-family:'Manrope'; font-size:16px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px; transition:opacity .3s ease;" style-hover="{{ btnHover }}">Отправить заявку<span class="send-icon" style="display:inline-flex;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></span></button>
+            </div>
+          </form>
+        </sc-if>
+      </div>
+    </div>
+  </section>
+  <footer style="max-width:1280px; margin:0 auto; padding:48px 40px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--taupe-line);">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <span style="width:20px; height:20px; background:var(--char); border-radius:5px; display:inline-block;"></span>
+      <span style="font-weight:800; font-size:18px; letter-spacing:0.12em;">ПРОФИБУД</span>
+    </div>
+    <div style="font-size:14px; color:var(--taupe);">© 2026 Строительная компания «ПРОФИБУД». Гродно, РБ.</div>
+    <div style="display:flex; gap:28px; font-size:14px; color:#57534e;"><a href="Projects.dc.html">Проекты</a><a href="Services.dc.html">Услуги</a><a href="https://www.instagram.com/profibud.by/">Instagram</a></div>
+  </footer>
+  <div ref="{{ setCursor }}" style="position:fixed; top:0; left:0; z-index:9999; pointer-events:none; opacity:0; will-change:transform; transform:translate(-100px,-100px);">
+    <svg width="26" height="28" viewBox="0 0 50 54" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 6px 12px rgba(26,26,26,.28));">
+      <path d="M42.6817 41.1495L27.5103 6.79925C26.7269 5.02557 24.2082 5.02558 23.3927 6.79925L7.59814 41.1495C6.75833 42.9759 8.52712 44.8902 10.4125 44.1954L24.3757 39.0496C24.7745 38.9034 25.2148 38.9034 25.6136 39.0496L39.5768 44.1954C41.4622 44.8902 43.231 42.9759 42.6817 41.1495Z" fill="#1A1A1A"/>
+      <path d="M43.7146 40.6933L28.5432 6.34306C27.3556 3.65428 23.5731 3.65429 22.3856 6.34306L6.59102 40.6933C5.31226 43.4382 8.00365 46.3437 10.8546 45.2932L24.8178 40.1474C24.9845 40.0865 25.1993 40.0865 25.366 40.1474L39.3292 45.2932C42.1802 46.3437 44.9992 43.4382 43.7146 40.6933Z" stroke="#FDFCF9" stroke-width="2.25825"/>
+    </svg>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:2600}}">
+class Component extends DCLogic {
+  state = { submitted: false };
+  componentDidMount() { this.initSmoothCursor(); }
+  componentWillUnmount() {
+    if (this._raf) cancelAnimationFrame(this._raf);
+    if (this._onMove) window.removeEventListener("mousemove", this._onMove);
+    document.documentElement.classList.remove("smooth-cursor-on");
+  }
+  initSmoothCursor() {
+    const el = this.cursor; if (!el) return;
+    if (window.matchMedia && !window.matchMedia("(pointer: fine)").matches) return;
+    document.documentElement.classList.add("smooth-cursor-on");
+    const k = 400, c = 45, mass = 1;
+    let tx = innerWidth / 2, ty = innerHeight / 2, px = tx, py = ty, vx = 0, vy = 0, angle = 0, targetAngle = 0, seen = false;
+    const onMove = (e) => { tx = e.clientX; ty = e.clientY; if (!seen) { seen = true; px = tx; py = ty; el.style.opacity = "1"; } };
+    window.addEventListener("mousemove", onMove); this._onMove = onMove;
+    let last = performance.now();
+    const tick = (now) => {
+      let dt = Math.min((now - last) / 1000, 0.033); last = now;
+      const h = 1 / 240; let t = dt;
+      while (t > 0) { const s = Math.min(h, t); t -= s; vx += ((-k * (px - tx) - c * vx) / mass) * s; px += vx * s; vy += ((-k * (py - ty) - c * vy) / mass) * s; py += vy * s; }
+      if (Math.hypot(vx, vy) > 25) targetAngle = Math.atan2(vy, vx) * 180 / Math.PI + 90;
+      let diff = ((targetAngle - angle + 540) % 360) - 180; angle += diff * Math.min(dt * 12, 1);
+      el.style.transform = "translate(" + px + "px, " + py + "px) translate(-50%, -50%) rotate(" + angle + "deg)";
+      this._raf = requestAnimationFrame(tick);
+    };
+    this._raf = requestAnimationFrame(tick);
+  }
+  mark(on) { return React.createElement("span", { style: { color: on ? "#1A1A1A" : "#cfc7b7", fontWeight: 700 } }, on ? "✓" : "—"); }
+  renderVals() {
+    const G = (title, rows) => ({ title, rows: rows.map(r => ({ name: r[0], baseEl: this.mark(r[1]), finishEl: this.mark(r[2]) })) });
+    const groups = [
+      G("Земляные работы", [["Срезка растительного слоя грунта",1,1],["Геодезическая съёмка участка, вынос осей здания",1,1],["Геология — определение типа фундамента",1,1]]),
+      G("Фундамент", [["Устройство траншей на глубину промерзания",1,1],["Устройство железобетонного фундамента по проекту",1,1]]),
+      G("Стены", [["Наружные стены из блоков ячеистого бетона 400 мм",1,1],["Внутренние несущие стены из блоков 300 мм",1,1],["Внутренние перегородки из блоков 100 мм",0,1]]),
+      G("Перекрытия", [["Установка балок перекрытия по проекту",1,1],["Утепление перекрытия 200 мм",1,1],["Пароизоляционная плёнка",1,1],["Обрешётка потолка (доска 100×25)",1,1]]),
+      G("Кровля", [["Стропильная система",1,1],["Гидро- и ветрозащитная плёнка",1,1],["Обрешётка и контробрешётка",1,1],["Настил из металлочерепицы",1,1],["Водосточная система",0,1],["Подшивка свесов софитом",0,1],["Огнебиозащита (сертификат МЧС)",1,1]]),
+      G("Окна и двери", [["Окна Brusbox 70, 2-камерный энергосберегающий стеклопакет",1,1],["Установка входной двери",1,1]]),
+      G("Электрика", [["Разводка электрики по дому",0,1],["Распайка узлов (коробок)",0,1],["Ввод в электрощит с автоматикой",0,1],["Заземление здания",0,1],["Разводка ТВ-кабелей",0,1]]),
+      G("Сантехника", [["Разводка труб отопления",0,1],["Разводка водоснабжения",0,1],["Разводка канализации",0,1],["Установка радиаторов",0,1]]),
+      G("Отделка и фасад", [["Внутренняя штукатурка стен",0,1],["Черновой пол 60–80 мм",0,1],["Утепление пола пенополистиролом 50 мм",0,1],["Стяжка пола 50 мм",0,1],["Фасад «Термошуба», минвата 50 мм",0,1]]),
+    ];
+    return Object.assign({
+      setCursor: (el) => { this.cursor = el; },
+      submitted: this.state.submitted,
+      notSubmitted: !this.state.submitted,
+      onSubmit: (e) => { e.preventDefault(); this.setState({ submitted: true }); },
+      btnHover: { opacity: 0.9 },
+      inputFocus: { borderBottomColor: "#1A1A1A" },
+    }, { groups: groups });
+  }
+}
+</script>
+</body>
+</html>

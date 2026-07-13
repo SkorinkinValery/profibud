@@ -1,0 +1,100 @@
+/* ============================================================
+   Раскладочные утилиты + адаптив
+   Брейкпоинты перенесены из макета: 1024 / 900 / 600
+   ============================================================ */
+
+/* ---------- Grid-утилиты ---------- */
+.grid { display: grid; }
+.grid-2 { grid-template-columns: 1fr 1fr; }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-5 { grid-template-columns: repeat(5, 1fr); }
+.items-center { align-items: center; }
+.items-end { align-items: end; }
+
+.gap-20 { gap: 20px; }
+.gap-24 { gap: 24px; }
+.gap-28 { gap: 28px; }
+.gap-32 { gap: 32px; }
+.gap-64 { gap: 64px; }
+.gap-72 { gap: 72px; }
+.gap-80 { gap: 80px; }
+
+.section-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+}
+.section-head--center { text-align: center; display: block; }
+
+/* ============================================================
+   Брейкпоинт 1024 — планшет: перенос навигации
+   ============================================================ */
+@media (max-width: 1024px) {
+  .header { height: auto; }
+  .nav {
+    flex-wrap: wrap;
+    padding: 14px 24px;
+    row-gap: 12px;
+  }
+  .nav__menu {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    justify-content: flex-start;
+    gap: 26px;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+  }
+  .nav__menu .nav-link { white-space: nowrap; }
+  .has-drop .drop { display: none; }
+  h1 { font-size: 46px !important; }
+}
+
+/* ============================================================
+   Брейкпоинт 900 — колонки схлопываются
+   ============================================================ */
+@media (max-width: 900px) {
+  .section { padding-left: 24px; padding-right: 24px; }
+
+  .grid-2 { grid-template-columns: 1fr; gap: 40px; }
+  .grid-3,
+  .grid-4,
+  .grid-5 { grid-template-columns: repeat(2, 1fr); }
+
+  .section-head { flex-direction: column; align-items: flex-start; gap: 24px; }
+
+  /* Собственные 2-колоночные блоки (не утилита .grid-2) */
+  .hero,
+  .about-panel,
+  .cta__inner { grid-template-columns: 1fr; gap: 40px; }
+  .hero { padding-bottom: 96px; }
+  .about-panel { padding: 40px; }
+  .cta__inner { padding: 72px 24px; }
+
+  h1 { font-size: 42px !important; }
+  h2, .h2 { font-size: 34px; }
+  :root { --h2: 34px; }
+}
+
+/* ============================================================
+   Брейкпоинт 600 — мобильный: одна колонка
+   ============================================================ */
+@media (max-width: 600px) {
+  .section { padding-left: 18px; padding-right: 18px; }
+
+  .grid-3,
+  .grid-4,
+  .grid-5 { grid-template-columns: 1fr; }
+
+  /* Плавающий поиск в hero — компактно */
+  .hero-search { grid-template-columns: 1fr 1fr; gap: 6px; }
+  .hero-search__field { padding-left: 12px !important; padding-right: 8px !important; }
+
+  h1 { font-size: 34px !important; }
+  h2, .h2 { font-size: 28px; }
+  :root { --h2: 28px; }
+
+  .nav { padding: 12px 16px; }
+  .nav__actions .nav-phone { display: none; }
+}

@@ -1,0 +1,15 @@
+# Окружение / IDE
+.venv/
+.idea/
+__pycache__/
+*.pyc
+
+# ОС
+.DS_Store
+Thumbs.db
+
+# Служебное
+.image-slots.state.json
+
+# Служебный скриншот
+img.png
