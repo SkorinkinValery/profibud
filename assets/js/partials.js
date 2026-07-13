@@ -12,7 +12,7 @@
     Array.from(nodes).map(async (node) => {
       const url = node.getAttribute('data-include');
       try {
-        const res = await fetch(url + '?v=20260713g');
+        const res = await fetch(url + '?v=20260713h');
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         node.innerHTML = await res.text();
       } catch (err) {

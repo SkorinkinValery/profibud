@@ -156,9 +156,9 @@
     left: auto;
     bottom: auto;
     transform: none;
-    width: calc(100% - 28px);
+    width: 100%;
     max-width: none;
-    margin: -44px auto 0;          /* лёгкое наслаивание на фото, как в ПК-версии */
+    margin: -44px 0 0;             /* только наслаивание на фото, ширина как у фото */
     grid-template-columns: 1fr 1fr;
     gap: 8px;
   }
