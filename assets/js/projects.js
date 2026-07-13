@@ -2,16 +2,22 @@
    Данные проектов + переиспользуемый рендер карточек.
    Один шаблон карточки для главной и всех страниц каталога.
    ============================================================ */
+const IMG = {
+  s1: 'assets/img/house-modern-1story.jpg',
+  dark: 'assets/img/house-dark-carport.jpg',
+  stone: 'assets/img/house-2story-stone.jpg',
+  chalet: 'assets/img/house-chalet.jpg',
+};
 const PROJECTS = [
-  { tag: 'Газосиликат', name: 'Проект «Гродно-100»', type: 'Одноэтажный', area: '100 м²',    beds: '3 комн.', baths: '1 с/у', floors: '1 этаж',  cat: 'do120', ph: 'var(--ph-4)' },
-  { tag: 'VELOX',       name: 'Проект «Неман»',       type: 'Мансардный',  area: '101,2 м²',  beds: '4 комн.', baths: '2 с/у', floors: '2 этажа', cat: 'do120', ph: 'var(--ph-2)' },
-  { tag: 'Газосиликат', name: 'Проект «Зелёный»',     type: 'Одноэтажный', area: '102 м²',    beds: '3 комн.', baths: '1 с/у', floors: '1 этаж',  cat: 'do120', ph: 'var(--ph-3)' },
-  { tag: 'Каркас',      name: 'Проект «Лесной»',      type: 'Мансардный',  area: '102,9 м²',  beds: '4 комн.', baths: '2 с/у', floors: '2 этажа', cat: 'do120', ph: 'var(--ph-1)' },
-  { tag: 'VELOX',       name: 'Проект «Панорама»',    type: 'Двухэтажный', area: '103,2 м²',  beds: '5 комн.', baths: '2 с/у', floors: '2 этажа', cat: 'do180', ph: 'var(--ph-4)' },
-  { tag: 'Газосиликат', name: 'Проект «Уют»',         type: 'Одноэтажный', area: '103,45 м²', beds: '4 комн.', baths: '1 с/у', floors: '1 этаж',  cat: 'do120', ph: 'var(--ph-2)' },
-  { tag: 'Каркас',      name: 'Проект «Дачный-45»',   type: 'Одноэтажный', area: '45 м²',     beds: '2 комн.', baths: '1 с/у', floors: '1 этаж',  cat: 'dachnye', ph: 'var(--ph-3)' },
-  { tag: 'Газосиликат', name: 'Проект «Компакт-68»',  type: 'Одноэтажный', area: '68 м²',     beds: '2 комн.', baths: '1 с/у', floors: '1 этаж',  cat: 'do70', ph: 'var(--ph-1)' },
-  { tag: 'VELOX',       name: 'Проект «Простор-165»', type: 'Двухэтажный', area: '165 м²',    beds: '5 комн.', baths: '3 с/у', floors: '2 этажа', cat: 'do180', ph: 'var(--ph-4)' },
+  { tag: 'Газосиликат', name: 'Проект «Гродно-100»', type: 'Одноэтажный', area: '100 м²',    beds: '3 комн.', baths: '1 с/у', floors: '1 этаж',  cat: 'do120', img: IMG.s1 },
+  { tag: 'VELOX',       name: 'Проект «Неман»',       type: 'Мансардный',  area: '101,2 м²',  beds: '4 комн.', baths: '2 с/у', floors: '2 этажа', cat: 'do120', img: IMG.chalet },
+  { tag: 'Газосиликат', name: 'Проект «Зелёный»',     type: 'Одноэтажный', area: '102 м²',    beds: '3 комн.', baths: '1 с/у', floors: '1 этаж',  cat: 'do120', img: IMG.dark },
+  { tag: 'Каркас',      name: 'Проект «Лесной»',      type: 'Мансардный',  area: '102,9 м²',  beds: '4 комн.', baths: '2 с/у', floors: '2 этажа', cat: 'do120', img: IMG.stone },
+  { tag: 'VELOX',       name: 'Проект «Панорама»',    type: 'Двухэтажный', area: '103,2 м²',  beds: '5 комн.', baths: '2 с/у', floors: '2 этажа', cat: 'do180', img: IMG.stone },
+  { tag: 'Газосиликат', name: 'Проект «Уют»',         type: 'Одноэтажный', area: '103,45 м²', beds: '4 комн.', baths: '1 с/у', floors: '1 этаж',  cat: 'do120', img: IMG.s1 },
+  { tag: 'Каркас',      name: 'Проект «Дачный-45»',   type: 'Одноэтажный', area: '45 м²',     beds: '2 комн.', baths: '1 с/у', floors: '1 этаж',  cat: 'dachnye', img: IMG.dark },
+  { tag: 'Газосиликат', name: 'Проект «Компакт-68»',  type: 'Одноэтажный', area: '68 м²',     beds: '2 комн.', baths: '1 с/у', floors: '1 этаж',  cat: 'do70', img: IMG.s1 },
+  { tag: 'VELOX',       name: 'Проект «Простор-165»', type: 'Двухэтажный', area: '165 м²',    beds: '5 комн.', baths: '3 с/у', floors: '2 этажа', cat: 'do180', img: IMG.chalet },
 ];
 
 const ICON_BED   = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v3"/><path d="M2 11v5a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M6 18v2M18 18v2"/></svg>';
@@ -24,7 +30,7 @@ function projectCard(p) {
   return `
   <article class="prop-card">
     <div class="prop-media">
-      <div class="prop-img"><div class="img-slot" style="background:${p.ph}"><span>Фото проекта</span></div></div>
+      <div class="prop-img"><div class="img-slot"><img src="${p.img}" alt="${p.name}" loading="lazy"></div></div>
       <div class="prop-tag">${p.tag}</div>
       <button class="heart-btn" type="button" aria-label="В избранное">${ICON_HEART}</button>
     </div>

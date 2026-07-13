@@ -8,10 +8,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/tokens.css?v=20260713d" />
-  <link rel="stylesheet" href="assets/css/base.css?v=20260713d" />
-  <link rel="stylesheet" href="assets/css/components.css?v=20260713d" />
-  <link rel="stylesheet" href="assets/css/responsive.css?v=20260713d" />
+  <link rel="stylesheet" href="assets/css/tokens.css?v=20260713e" />
+  <link rel="stylesheet" href="assets/css/base.css?v=20260713e" />
+  <link rel="stylesheet" href="assets/css/components.css?v=20260713e" />
+  <link rel="stylesheet" href="assets/css/responsive.css?v=20260713e" />
 </head>
 <body>
   <div data-include="partials/header.html" data-nav="projects"></div>
@@ -47,21 +47,21 @@
     </svg>
   </div>
 
-  <script src="assets/js/partials.js?v=20260713d"></script>
-  <script src="assets/js/nav.js?v=20260713d"></script>
-  <script src="assets/js/form.js?v=20260713d"></script>
-  <script src="assets/js/smooth-cursor.js?v=20260713d"></script>
+  <script src="assets/js/partials.js?v=20260713e"></script>
+  <script src="assets/js/nav.js?v=20260713e"></script>
+  <script src="assets/js/form.js?v=20260713e"></script>
+  <script src="assets/js/smooth-cursor.js?v=20260713e"></script>
   <script>
     const CATS = [
-      { name: 'Дачные дома',      sub: 'Компактные дома для отдыха',   count: 15, href: 'projects-dachnye.html', ph: 'var(--ph-2)' },
-      { name: 'Дома до 70 м²',    sub: 'Небольшие уютные дома',        count: 14, href: 'projects-do70.html',    ph: 'var(--ph-3)' },
-      { name: 'Дома до 120 м²',   sub: 'Оптимальный размер для семьи', count: 75, href: 'projects-do120.html',   ph: 'var(--ph-1)' },
-      { name: 'Дома 120–180 м²',  sub: 'Просторные семейные дома',     count: 61, href: 'projects-do180.html',   ph: 'var(--ph-4)' },
+      { name: 'Дачные дома',      sub: 'Компактные дома для отдыха',   count: 15, href: 'projects-dachnye.html', img: 'assets/img/house-chalet.jpg' },
+      { name: 'Дома до 70 м²',    sub: 'Небольшие уютные дома',        count: 14, href: 'projects-do70.html',    img: 'assets/img/house-modern-1story.jpg' },
+      { name: 'Дома до 120 м²',   sub: 'Оптимальный размер для семьи', count: 75, href: 'projects-do120.html',   img: 'assets/img/house-dark-carport.jpg' },
+      { name: 'Дома 120–180 м²',  sub: 'Просторные семейные дома',     count: 61, href: 'projects-do180.html',   img: 'assets/img/house-2story-stone.jpg' },
     ];
     document.getElementById('cats').innerHTML = CATS.map((c) => `
       <a href="${c.href}" class="cat-card">
         <div class="cat-media">
-          <div class="cat-img"><div class="img-slot" style="background:${c.ph}"><span>Фото категории</span></div></div>
+          <div class="cat-img"><div class="img-slot"><img src="${c.img}" alt="${c.name}" loading="lazy"></div></div>
           <div class="cat-count">${c.count} проектов</div>
           <div class="cat-caption"><h3>${c.name}</h3><span>${c.sub}</span></div>
         </div>
